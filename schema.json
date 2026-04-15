@@ -89,7 +89,10 @@
         "path": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "path"
+      ]
     },
     "hasUrl": {
       "type": "object",
@@ -98,7 +101,10 @@
           "type": "string",
           "format": "uri"
         }
-      }
+      },
+      "required": [
+        "url"
+      ]
     },
     "thumbnailDetails": {
       "type": "object",
@@ -151,8 +157,7 @@
             }
           ]
         }
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }
