@@ -32,10 +32,7 @@
           }
         }
       },
-      "required": [
-        "zarr_conventions",
-        "thumbnails"
-      ]
+      "required": ["zarr_conventions", "thumbnails"]
     }
   },
   "required": ["zarr_format", "node_type", "attributes"],
@@ -90,9 +87,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "path"
-      ]
+      "required": ["path"]
     },
     "hasUrl": {
       "type": "object",
@@ -102,9 +97,7 @@
           "format": "uri"
         }
       },
-      "required": [
-        "url"
-      ]
+      "required": ["url"]
     },
     "thumbnailDetails": {
       "type": "object",
@@ -134,11 +127,7 @@
           "additionalProperties": true
         }
       },
-      "required": [
-        "width",
-        "height",
-        "media_type"
-      ]
+      "required": ["width", "height", "media_type"]
     },
     "thumbnail": {
       "type": "object",
