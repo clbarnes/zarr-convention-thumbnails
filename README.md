@@ -1,30 +1,33 @@
-# Template Convention Metadata
+# Thumbnails Convention Metadata
 
-- **UUID**: 00000000-0000-0000-0000-000000000000
-- **Name**: Template
-- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/template/refs/tags/v1/schema.json"
-- **Spec URL**: "https://github.com/zarr-conventions/template/blob/v1/README.md"
+- **UUID**: 49326c01-1180-4743-b15f-f7157038a6ab
+- **Name**: Thumbnails
+- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json"
+- **Spec URL**: "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md"
 - **Scope**: Array, Group
 - **Extension Maturity Classification**: Proposal
-- **Owner**: @your-github-handle, @another-github-handle
+- **Owner**: @clbarnes
 
 ## Description
 
-This convention defines [brief description of what this convention does]. All properties use the `template:` namespace prefix (or nested `template` object) and are placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
+This convention allows a Zarr node to refer to thumnbails which represent that node in some way.
+All properties are under the `thumbnails` key placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
 
-[Add more detailed description of the convention, its purpose, and how it fits into the Zarr ecosystem. Explain what problem it solves and how it should be used.]
+Thumbnails SHOULD be small (usually smaller than 512x512) and SHOULD be stored in a well-supported image format (e.g. JPEG, PNG).
+How a thumbnail "represents" a Zarr node is up to the data owner.
+As examples, it MAY be
+
+- a low-resolution greyscale 2D slice from the middle of a Zarr array
+- a descriptive excerpt from one scale level of a multiscale array pyramid
+- a logo
 
 - Examples:
-  - [Convention metadata only](examples/minimal_example.json)
-  - [Key-prefixed pattern (recommended)](examples/key_prefixed_example.json)
-  - [Nested pattern](examples/nested_example.json)
+  - [Simple example](examples/minimal_example.json)
 
 ## Motivation
 
-- **First benefit**: Explanation of the first key benefit this convention provides
-- **Second benefit**: Explanation of the second key benefit
-- **Third benefit**: Explanation of additional benefits
-- **Use case alignment**: How this convention aligns with common use cases in the domain
+- **Viewer consistency**: Users interacting with the same data across multiple viewers may be helped by the same thumbnails
+- **Owner control**: Data owners are more likely than viewers to know which parts of an array or group is "representative"
 
 ## Convention Registration
 
@@ -34,11 +37,11 @@ The convention must be registered in `zarr_conventions`:
 {
   "zarr_conventions": [
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/template/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-conventions/template/blob/v1/README.md",
-      "uuid": "00000000-0000-0000-0000-000000000000",
-      "name": "template:",
-      "description": "Brief description of the convention"
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md",
+      "uuid": "49326c01-1180-4743-b15f-f7157038a6ab",
+      "name": "thumbnails",
+      "description": "Metadata for thumbnails representing Zarr data"
     }
   ]
 }
@@ -55,79 +58,67 @@ This convention can be used with these parts of the Zarr hierarchy:
 
 All properties are placed at the root `attributes` level. To avoid attribute name collisions with other conventions, this convention supports the following pattern [remove the pattern irrelevant for this convention]:
 
-#### 1. Key-Prefixed Pattern (Recommended)
+All convention properties are nested under a single `thumbnails` key.
 
-Individual attributes are prefixed with `template:`. This is the recommended approach as it enables better composability - other conventions can extend objects defined by this convention.
+**Convention metadata name**: `thumbnails`
 
-**Convention metadata name**: `template:`
-
-| Field Name           | Type                      | Description                                  |
-| -------------------- | ------------------------- | -------------------------------------------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field...                        |
-| template:another_one | \[number]                 | Describe the field...                        |
+| Field Name | Type | Description |
+| ---------- | ---- | ----------- |
+| thumbnails | array of [thumbnails Object](#thumbnail-object) | **REQUIRED**. Thumbnail details. |
 
 **Example**:
 
-```json
+```jsonc
 {
+  "zarr_format": 3,
+  // ...
   "attributes": {
-    "zarr_conventions": [{ "name": "template:", "spec_url": "..." }],
-    "template:new_field": "example value",
-    "template:xyz": { "x": 1.0, "y": 2.0, "z": 3.0 }
+    "zarr_conventions": [{ "name": "thumbnails", "spec_url": "..." }],
+    "thumbnails": [
+      {
+        "width": 96,
+        "height": 96,
+        // optional
+        "attributes": {
+          // unstructured
+          "z_slice": 123,
+          "xy_offset": [128, 256],
+          "downsampling": "gaussian",
+        },
+        "media_type": "image/jpeg",
+        // relative path downward from this zarr node to the thumbnail storage key
+        "path": "thumbails/thumb96.jpeg"
+      },
+      {
+        "width": 48,
+        "height": 48,
+        "media_type": "image/png",
+        // optional
+        "description": "Very small thumbnail",
+        // URL to external
+        "url": "https://image.host/thumb48.png"
+      }
+    ]
   }
 }
 ```
 
-#### 2. Nested Pattern
+### Thumbnail Object
 
-All convention properties are nested under a single `template` key.
+When using the nested pattern, all properties are contained in the `thumbnails` object:
 
-**Convention metadata name**: `template`
+| Field Name | Type | Description |
+| ---------- | ---- | ----------- |
+| width | number | **REQUIRED**. Thumbnail pixel width as a positive integer. |
+| height | number | **REQUIRED**. Thumnbnail pixel height as a positive integer. |
+| media_type | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type). |
+| description | string | Free-text description of this thumbnail's context; could be used as [alt text](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt). |
+| attributes | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node. |
+| path | string | Relative path from Zarr storage prefix of this node to the thumbnail object; MUST NOT contain `..` or `.` segments. |
+| url | string | URL to externally-hosted thumbnail; possibly a [data URL](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data). |
 
-| Field Name | Type                                | Description                                  |
-| ---------- | ----------------------------------- | -------------------------------------------- |
-| template   | [Template Object](#template-object) | **REQUIRED**. Template convention properties |
-
-**Example**:
-
-```json
-{
-  "attributes": {
-    "zarr_conventions": [{ "name": "template", "spec_url": "..." }],
-    "template": {
-      "new_field": "example value",
-      "xyz": { "x": 1.0, "y": 2.0, "z": 3.0 }
-    }
-  }
-}
-```
-
-### Template Object
-
-When using the nested pattern, all properties are contained in the `template` object:
-
-| Field Name  | Type                      | Description                                  |
-| ----------- | ------------------------- | -------------------------------------------- |
-| new_field   | string                    | **REQUIRED**. Describe the required field... |
-| xyz         | [XYZ Object](#xyz-object) | Describe the field...                        |
-| another_one | \[number]                 | Describe the field...                        |
-
-### Additional Field Information
-
-#### new_field (template:new_field or template.new_field)
-
-This is a much more detailed description of the field `new_field`...
-
-### XYZ Object
-
-This is the introduction for the purpose and the content of the XYZ Object...
-
-| Field Name | Type   | Description                                  |
-| ---------- | ------ | -------------------------------------------- |
-| x          | number | **REQUIRED**. Describe the required field... |
-| y          | number | **REQUIRED**. Describe the required field... |
-| z          | number | **REQUIRED**. Describe the required field... |
+Exactly one of `path` and `url` MUST be given.
+`path` MUST refer to a descendant of the node's prefix.
 
 ## Known Implementations
 
@@ -135,30 +126,22 @@ This section helps potential implementers assess the convention's maturity and a
 
 ### Libraries and Tools
 
-- **[Library/Tool Name](https://link-to-repo)** - Brief description of the implementation
+<!-- - **[Library/Tool Name](https://link-to-repo)** - Brief description of the implementation
   - Language: Python/JavaScript/Rust/etc.
   - Status: Experimental/Stable/Production
   - Maintainer: @github-handle
-  - Since: Version X.Y or Date
-
-- **[Another Implementation](https://link)** - Description
-  - Language: Language
-  - Status: Status
-  - Maintainer: @handle
-  - Since: Version/Date
+  - Since: Version X.Y or Date -->
 
 ### Datasets Using This Convention
 
-- **[Dataset Name](https://link-to-dataset)** - Description of the dataset and how it uses this convention
-- **[Another Dataset](https://link)** - Description
+<!-- - **[Dataset Name](https://link-to-dataset)** - Description of the dataset and how it uses this convention -->
 
 ### Resources
 
-- Tutorials, blog posts, or other resources demonstrating this convention
-- Community discussions or working groups
+- Initial proposal: <https://github.com/German-BioImaging/ome-zarr-ideas/issues/43>
 
 _If you implement or use this convention, please add your implementation to this list by submitting a pull request._
 
 ## Acknowledgements
 
-This template is based on the [STAC extensions template](https://github.com/stac-extensions/template/blob/main/README.md).
+This thumbnails is based on the [STAC extensions thumbnails](https://github.com/stac-extensions/thumbnails/blob/main/README.md).

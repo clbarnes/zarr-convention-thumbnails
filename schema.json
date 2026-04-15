@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Template Convention",
-  "description": "Schema for Template Zarr convention, supporting both key-prefixed and nested namespace patterns",
+  "title": "thumbnails Convention",
+  "description": "Schema for thumbnails Zarr convention, supporting both key-prefixed and nested namespace patterns",
   "type": "object",
   "properties": {
     "zarr_format": {
@@ -41,30 +41,30 @@
   "$defs": {
     "conventionMetadata": {
       "type": "object",
-      "description": "Template convention metadata object for use in zarr_conventions array",
+      "description": "thumbnails convention metadata object for use in zarr_conventions array",
       "properties": {
         "schema_url": {
           "type": "string",
-          "const": "https://raw.githubusercontent.com/zarr-conventions/template/refs/tags/v1/schema.json",
+          "const": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json",
           "description": "URL to the JSON Schema definition for this convention"
         },
         "spec_url": {
           "type": "string",
-          "const": "https://github.com/zarr-conventions/template/blob/v1/README.md",
+          "const": "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md",
           "description": "URL to the full specification document"
         },
         "uuid": {
           "type": "string",
-          "const": "00000000-0000-0000-0000-000000000000",
+          "const": "49326c01-1180-4743-b15f-f7157038a6ab",
           "description": "UUID that permanently identifies this convention"
         },
         "name": {
           "type": "string",
-          "description": "Human-readable name of the convention. Should be 'template:' for key-prefixed pattern or 'template' for nested pattern"
+          "description": "Human-readable name of the convention. Should be 'thumbnails:' for key-prefixed pattern or 'thumbnails' for nested pattern"
         },
         "description": {
           "type": "string",
-          "const": "Template convention for demonstrating Zarr convention metadata structure",
+          "const": "thumbnails convention for demonstrating Zarr convention metadata structure",
           "description": "Brief description of the convention's purpose and usage"
         }
       },
@@ -83,7 +83,7 @@
     },
     "conventionProperties": {
       "type": "object",
-      "description": "Template convention properties",
+      "description": "thumbnails convention properties",
       "properties": {
         "new_field": {
           "type": "string",
@@ -125,17 +125,17 @@
     },
     "keyPrefixedAttributes": {
       "type": "object",
-      "description": "Template convention using key-prefixed pattern (e.g., template:new_field)",
+      "description": "thumbnails convention using key-prefixed pattern (e.g., thumbnails:new_field)",
       "properties": {
         "zarr_conventions": true,
-        "template:new_field": {
+        "thumbnails:new_field": {
           "type": "string",
           "description": "REQUIRED. Describe the required field..."
         },
-        "template:xyz": {
+        "thumbnails:xyz": {
           "$ref": "#/$defs/xyzObject"
         },
-        "template:another_one": {
+        "thumbnails:another_one": {
           "type": "array",
           "description": "Array of numeric values",
           "items": {
@@ -143,19 +143,23 @@
           }
         }
       },
-      "required": ["template:new_field"],
+      "required": [
+        "thumbnails:new_field"
+      ],
       "additionalProperties": true
     },
     "nestedAttributes": {
       "type": "object",
-      "description": "Template convention using nested pattern (single 'template' key)",
+      "description": "thumbnails convention using nested pattern (single 'thumbnails' key)",
       "properties": {
         "zarr_conventions": true,
-        "template": {
+        "thumbnails": {
           "$ref": "#/$defs/conventionProperties"
         }
       },
-      "required": ["template"],
+      "required": [
+        "thumbnails"
+      ],
       "additionalProperties": true
     }
   }

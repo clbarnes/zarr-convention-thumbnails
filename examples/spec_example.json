@@ -1,0 +1,38 @@
+{
+  "zarr_format": 3,
+  "node_type": "array",
+  "attributes": {
+    "zarr_conventions": [
+      {
+        "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json",
+        "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md",
+        "uuid": "49326c01-1180-4743-b15f-f7157038a6ab",
+        "name": "thumbnails:",
+        "description": "thumbnails convention for demonstrating Zarr convention metadata structure"
+      }
+    ],
+    "thumbnails": [
+      {
+        "width": 96,
+        "height": 96,
+        "attributes": {
+          "z_slice": 123,
+          "xy_offset": [
+            128,
+            256
+          ],
+          "downsampling": "gaussian"
+        },
+        "media_type": "image/jpeg",
+        "path": "thumbails/thumb96.jpeg"
+      },
+      {
+        "width": 48,
+        "height": 48,
+        "media_type": "image/png",
+        "description": "Very small thumbnail",
+        "url": "https://image.host/thumb48.png"
+      }
+    ]
+  }
+}
