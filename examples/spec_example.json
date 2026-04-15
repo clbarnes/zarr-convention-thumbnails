@@ -17,10 +17,7 @@
         "height": 96,
         "attributes": {
           "z_slice": 123,
-          "xy_offset": [
-            128,
-            256
-          ],
+          "xy_offset": [128, 256],
           "downsampling": "gaussian"
         },
         "media_type": "image/jpeg",

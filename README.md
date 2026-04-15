@@ -63,8 +63,8 @@ All convention properties are nested under a single `thumbnails` key.
 
 **Convention metadata name**: `thumbnails`
 
-| Field Name | Type | Description |
-| ---------- | ---- | ----------- |
+| Field Name | Type                                            | Description                      |
+| ---------- | ----------------------------------------------- | -------------------------------- |
 | thumbnails | array of [thumbnails Object](#thumbnail-object) | **REQUIRED**. Thumbnail details. |
 
 **Example**:
@@ -88,7 +88,7 @@ All convention properties are nested under a single `thumbnails` key.
         },
         "media_type": "image/jpeg",
         // relative path downward from this zarr node to the thumbnail storage key
-        "path": "thumbails/thumb96.jpeg"
+        "path": "thumbails/thumb96.jpeg",
       },
       {
         "width": 48,
@@ -97,10 +97,10 @@ All convention properties are nested under a single `thumbnails` key.
         // optional
         "description": "Very small thumbnail",
         // URL to external
-        "url": "https://image.host/thumb48.png"
-      }
-    ]
-  }
+        "url": "https://image.host/thumb48.png",
+      },
+    ],
+  },
 }
 ```
 
@@ -108,15 +108,15 @@ All convention properties are nested under a single `thumbnails` key.
 
 When using the nested pattern, all properties are contained in the `thumbnails` object:
 
-| Field Name | Type | Description |
-| ---------- | ---- | ----------- |
-| width | number | **REQUIRED**. Thumbnail pixel width as a positive integer. |
-| height | number | **REQUIRED**. Thumnbnail pixel height as a positive integer. |
-| media_type | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type). |
+| Field Name  | Type   | Description                                                                                                                                            |
+| ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| width       | number | **REQUIRED**. Thumbnail pixel width as a positive integer.                                                                                             |
+| height      | number | **REQUIRED**. Thumnbnail pixel height as a positive integer.                                                                                           |
+| media_type  | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type).                                  |
 | description | string | Free-text description of this thumbnail's context; could be used as [alt text](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt). |
-| attributes | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node. |
-| path | string | Relative path from Zarr storage prefix of this node to the thumbnail object; MUST NOT contain `..` or `.` segments. |
-| url | string | URL to externally-hosted thumbnail; possibly a [data URL](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data). |
+| attributes  | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.            |
+| path        | string | Relative path from Zarr storage prefix of this node to the thumbnail object; MUST NOT contain `..` or `.` segments.                                    |
+| url         | string | URL to externally-hosted thumbnail; possibly a [data URL](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data).                    |
 
 Exactly one of `path` and `url` MUST be given.
 `path` MUST refer to a descendant of the node's prefix.
