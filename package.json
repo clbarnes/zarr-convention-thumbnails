@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "test": "node test.js",
-    "fmt": "prettier --write *.{js,json,md} **/*.{js,json,md}",
+    "fmt": "prettier --write . \"*.{js,json,md,yaml}\"",
     "lint": "eslint ."
   },
   "devDependencies": {
