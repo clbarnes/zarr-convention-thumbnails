@@ -83,16 +83,16 @@
       ],
       "additionalProperties": false
     },
-    "path": {
-      "type": "string",
+    "hasPath": {
+      "type": "object",
       "properties": {
         "path": {
           "type": "string"
         }
       }
     },
-    "url": {
-      "type": "string",
+    "hasUrl": {
+      "type": "object",
       "properties": {
         "url": {
           "type": "uri"
@@ -144,10 +144,10 @@
           "type": "object",
           "oneOf": [
             {
-              "$ref": "#/$defs/path"
+              "$ref": "#/$defs/hasPath"
             },
             {
-              "$ref": "#/$defs/url"
+              "$ref": "#/$defs/hasUrl"
             }
           ]
         }
