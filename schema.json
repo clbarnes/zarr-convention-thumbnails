@@ -95,7 +95,8 @@
       "type": "object",
       "properties": {
         "url": {
-          "type": "uri"
+          "type": "string",
+          "format": "uri"
         }
       }
     },
@@ -131,8 +132,7 @@
         "width",
         "height",
         "media_type"
-      ],
-      "additionalProperties": false
+      ]
     },
     "thumbnail": {
       "type": "object",

@@ -8,10 +8,10 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "ajv": "^8.17.1",
-    "eslint": "^9.39.2",
+    "ajv": "^8.18.0",
+    "eslint": "^10.2.0",
     "prettier": "^3.7.4",
-    "@eslint/json": "^0.14.0",
-    "@eslint/markdown": "^7.5.1"
+    "@eslint/json": "^1.2.0",
+    "@eslint/markdown": "^8.0.1"
   }
 }
