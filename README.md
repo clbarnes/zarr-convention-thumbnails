@@ -21,8 +21,9 @@ As examples, it MAY be
 - a descriptive excerpt from one scale level of a multiscale array pyramid
 - a logo
 
-- Examples:
-  - [Simple example](examples/minimal_example.json)
+Examples:
+
+- [Simple example](examples/minimal_example.json)
 
 ## Motivation
 
