@@ -23,16 +23,18 @@
           "contains": {
             "$ref": "#/$defs/conventionMetadata"
           }
+        },
+        "thumbnails": {
+          "type": "array",
+          "description": "Array of thumbnail objects",
+          "items": {
+            "$ref": "#/$defs/thumbnail"
+          }
         }
       },
-      "required": ["zarr_conventions"],
-      "oneOf": [
-        {
-          "$ref": "#/$defs/keyPrefixedAttributes"
-        },
-        {
-          "$ref": "#/$defs/nestedAttributes"
-        }
+      "required": [
+        "zarr_conventions",
+        "thumbnails"
       ]
     }
   },
@@ -81,86 +83,76 @@
       ],
       "additionalProperties": false
     },
-    "conventionProperties": {
-      "type": "object",
-      "description": "thumbnails convention properties",
+    "path": {
+      "type": "string",
       "properties": {
-        "new_field": {
-          "type": "string",
-          "description": "REQUIRED. Describe the required field..."
-        },
-        "xyz": {
-          "$ref": "#/$defs/xyzObject"
-        },
-        "another_one": {
-          "type": "array",
-          "description": "Array of numeric values",
-          "items": {
-            "type": "number"
-          }
+        "path": {
+          "type": "string"
         }
-      },
-      "required": ["new_field"],
-      "additionalProperties": false
+      }
     },
-    "xyzObject": {
-      "type": "object",
-      "description": "XYZ Object containing x, y, z coordinates",
+    "url": {
+      "type": "string",
       "properties": {
-        "x": {
-          "type": "number",
-          "description": "REQUIRED. X coordinate value"
-        },
-        "y": {
-          "type": "number",
-          "description": "REQUIRED. Y coordinate value"
-        },
-        "z": {
-          "type": "number",
-          "description": "REQUIRED. Z coordinate value"
+        "url": {
+          "type": "uri"
         }
-      },
-      "required": ["x", "y", "z"],
-      "additionalProperties": false
+      }
     },
-    "keyPrefixedAttributes": {
+    "thumbnailDetails": {
       "type": "object",
-      "description": "thumbnails convention using key-prefixed pattern (e.g., thumbnails:new_field)",
+      "description": "Thumbnail details.",
       "properties": {
-        "zarr_conventions": true,
-        "thumbnails:new_field": {
+        "width": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Width of the thumbnail in pixels."
+        },
+        "height": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "Height of the thumbnail in pixels."
+        },
+        "media_type": {
           "type": "string",
-          "description": "REQUIRED. Describe the required field..."
+          "description": "Media type (formerly MIME type) of the thumbnail, e.g., 'image/jpeg'."
         },
-        "thumbnails:xyz": {
-          "$ref": "#/$defs/xyzObject"
+        "description": {
+          "type": "string",
+          "description": "Free-text description of this thumbnail's context; could be used as alt text."
         },
-        "thumbnails:another_one": {
-          "type": "array",
-          "description": "Array of numeric values",
-          "items": {
-            "type": "number"
-          }
+        "attributes": {
+          "type": "object",
+          "description": "Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.",
+          "additionalProperties": true
         }
       },
       "required": [
-        "thumbnails:new_field"
+        "width",
+        "height",
+        "media_type"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     },
-    "nestedAttributes": {
+    "thumbnail": {
       "type": "object",
-      "description": "thumbnails convention using nested pattern (single 'thumbnails' key)",
-      "properties": {
-        "zarr_conventions": true,
-        "thumbnails": {
-          "$ref": "#/$defs/conventionProperties"
+      "allOf": [
+        {
+          "$ref": "#/$defs/thumbnailDetails"
+        },
+        {
+          "type": "object",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/path"
+            },
+            {
+              "$ref": "#/$defs/url"
+            }
+          ]
         }
-      },
-      "required": [
-        "thumbnails"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     }
   }
 }
