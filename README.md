@@ -28,7 +28,7 @@ As examples, a thumbnail MAY be
 
 Examples:
 
-- [Simple example](examples/minimal_example.json)
+- [Simple example also shown below](examples/spec_example.json)
 
 ## Motivation
 
