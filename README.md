@@ -116,7 +116,7 @@ When using the nested pattern, all properties are contained in the `thumbnails` 
 | Field Name  | Type   | Description                                                                                                                                            |
 | ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | width       | number | **REQUIRED**. Image width in pixels as a positive integer.                                                                                             |
-| height      | number | **REQUIRED**. Image height in pixels as a positive integer.                                                                                           |
+| height      | number | **REQUIRED**. Image height in pixels as a positive integer.                                                                                            |
 | media_type  | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type).                                  |
 | description | string | Free-text description of this thumbnail's context; could be used as [alt text](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt). |
 | attributes  | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.            |
