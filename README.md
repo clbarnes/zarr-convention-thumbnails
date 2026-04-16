@@ -13,9 +13,14 @@
 This convention allows a Zarr node to refer to thumnbails which represent that node in some way.
 All properties are under the `thumbnails` key placed at the root `attributes` level following the [Zarr Conventions Specification](https://github.com/zarr-conventions/zarr-conventions-spec).
 
-Thumbnails SHOULD be small (usually smaller than 512x512) and SHOULD be stored in a well-supported image format (e.g. JPEG, PNG).
+Thumbnails SHOULD be stored in a well-supported image format (e.g. JPEG, PNG).
+
+Thumbnails SHOULD include at least one small image (under 200KB and longest edge between 128px and 512 px) suitable for fast loading in an image gallery.
+Thumbnails MAY include larger files for detail panels or hover previews.
+Thumbnails MAY include smaller files for specialized used cases, such as icon-sized previews.
+
 How a thumbnail "represents" a Zarr node is up to the data owner.
-As examples, it MAY be
+As examples, a thumbnail MAY be
 
 - a low-resolution greyscale 2D slice from the middle of a Zarr array
 - a descriptive excerpt from one scale level of a multiscale array pyramid
@@ -110,8 +115,8 @@ When using the nested pattern, all properties are contained in the `thumbnails` 
 
 | Field Name  | Type   | Description                                                                                                                                            |
 | ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| width       | number | **REQUIRED**. Thumbnail pixel width as a positive integer.                                                                                             |
-| height      | number | **REQUIRED**. Thumnbnail pixel height as a positive integer.                                                                                           |
+| width       | number | **REQUIRED**. Image width in pixels as a positive integer.                                                                                             |
+| height      | number | **REQUIRED**. Image height in pixels as a positive integer.                                                                                           |
 | media_type  | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type).                                  |
 | description | string | Free-text description of this thumbnail's context; could be used as [alt text](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt). |
 | attributes  | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.            |
@@ -127,15 +132,15 @@ This section helps potential implementers assess the convention's maturity and a
 
 ### Libraries and Tools
 
-<!-- - **[Library/Tool Name](https://link-to-repo)** - Brief description of the implementation
-  - Language: Python/JavaScript/Rust/etc.
-  - Status: Experimental/Stable/Production
-  - Maintainer: @github-handle
-  - Since: Version X.Y or Date -->
+- **[zarrs_conventions_thumbnails](https://github.com/clbarnes/zarrs_conventions/tree/main/zarrs_conventions_thumbnails)** - Implementation for the rust/ zarrs/ zarrs_conventions ecosystem
+  - Language: Rust
+  - Status: Experimental
+  - Maintainer: @clbarnes
+  - Since: Version 0.1.0
 
 ### Datasets Using This Convention
 
-<!-- - **[Dataset Name](https://link-to-dataset)** - Description of the dataset and how it uses this convention -->
+- **[Example ome-ngff-validator](https://ome.github.io/ome-ngff-validator/?source=https://pub-c4a3c62df94840688feeada706020240.r2.dev/4ffaeed2-fa70-4907-820f-8a96ef683095.zarr)** - HeLa cells showing click chemistry and immunofluorescence
 
 ### Resources
 
