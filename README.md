@@ -1,9 +1,9 @@
 # Thumbnails Convention Metadata
 
-- **UUID**: 49326c01-1180-4743-b15f-f7157038a6ab
+- **UUID**: 38a1d2ca-5f40-4ee2-b4d5-5e87bfeb7549
 - **Name**: Thumbnails
-- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json"
-- **Spec URL**: "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md"
+- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v2/schema.json"
+- **Spec URL**: "https://github.com/zarr-conventions/thumbnails/blob/v2/README.md"
 - **Scope**: Array, Group
 - **Extension Maturity Classification**: Proposal
 - **Owner**: @clbarnes
@@ -43,9 +43,9 @@ The convention must be registered in `zarr_conventions`:
 {
   "zarr_conventions": [
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md",
-      "uuid": "49326c01-1180-4743-b15f-f7157038a6ab",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v2/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v2/README.md",
+      "uuid": "38a1d2ca-5f40-4ee2-b4d5-5e87bfeb7549",
       "name": "thumbnails",
       "description": "Metadata for thumbnails representing Zarr data"
     }
