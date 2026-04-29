@@ -11,10 +11,8 @@
     "@eslint/json": "^1.2.0",
     "@eslint/markdown": "^8.0.1",
     "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^10.2.0",
     "prettier": "^3.7.4"
-  },
-  "dependencies": {
-    "ajv-formats": "^3.0.1"
   }
 }

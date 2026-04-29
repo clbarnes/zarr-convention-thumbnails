@@ -1,9 +1,9 @@
 # Thumbnails Convention Metadata
 
-- **UUID**: 49326c01-1180-4743-b15f-f7157038a6ab
+- **UUID**: 38a1d2ca-5f40-4ee2-b4d5-5e87bfeb7549
 - **Name**: Thumbnails
-- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json"
-- **Spec URL**: "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md"
+- **Schema URL**: "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v2/schema.json"
+- **Spec URL**: "https://github.com/zarr-conventions/thumbnails/blob/v2/README.md"
 - **Scope**: Array, Group
 - **Extension Maturity Classification**: Proposal
 - **Owner**: @clbarnes
@@ -22,7 +22,7 @@ Thumbnails MAY include smaller files for specialized used cases, such as icon-si
 How a thumbnail "represents" a Zarr node is up to the data owner.
 As examples, a thumbnail MAY be
 
-- a low-resolution greyscale 2D slice from the middle of a Zarr array
+- a low-resolution 2D cropped slice from the middle of a Zarr array
 - a descriptive excerpt from one scale level of a multiscale array pyramid
 - a logo
 
@@ -43,9 +43,9 @@ The convention must be registered in `zarr_conventions`:
 {
   "zarr_conventions": [
     {
-      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v1/schema.json",
-      "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v1/README.md",
-      "uuid": "49326c01-1180-4743-b15f-f7157038a6ab",
+      "schema_url": "https://raw.githubusercontent.com/zarr-conventions/thumbnails/refs/tags/v2/schema.json",
+      "spec_url": "https://github.com/zarr-conventions/thumbnails/blob/v2/README.md",
+      "uuid": "38a1d2ca-5f40-4ee2-b4d5-5e87bfeb7549",
       "name": "thumbnails",
       "description": "Metadata for thumbnails representing Zarr data"
     }
@@ -93,7 +93,7 @@ All convention properties are nested under a single `thumbnails` key.
         },
         "media_type": "image/jpeg",
         // relative path downward from this zarr node to the thumbnail storage key
-        "path": "thumbails/thumb96.jpeg",
+        "uri": "thumbails/thumb96.jpeg",
       },
       {
         "width": 48,
@@ -102,7 +102,7 @@ All convention properties are nested under a single `thumbnails` key.
         // optional
         "description": "Very small thumbnail",
         // URL to external
-        "url": "https://image.host/thumb48.png",
+        "uri": "https://image.host/thumb48.png",
       },
     ],
   },
@@ -118,13 +118,19 @@ When using the nested pattern, all properties are contained in the `thumbnails` 
 | width       | number | **REQUIRED**. Image width in pixels as a positive integer.                                                                                             |
 | height      | number | **REQUIRED**. Image height in pixels as a positive integer.                                                                                            |
 | media_type  | string | **REQUIRED**. [Media type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types) (formerly MIME type).                                  |
+| uri         | string | **REQUIRED**. [URI-reference](https://datatracker.ietf.org/doc/html/rfc3986) to the thumbnail image.                                                   |
 | description | string | Free-text description of this thumbnail's context; could be used as [alt text](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt). |
 | attributes  | object | Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.            |
-| path        | string | Relative path from Zarr storage prefix of this node to the thumbnail object; MUST NOT contain `..` or `.` segments.                                    |
-| url         | string | URL to externally-hosted thumbnail; possibly a [data URL](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data).                    |
 
-Exactly one of `path` and `url` MUST be given.
-`path` MUST refer to a descendant of the node's prefix.
+The `uri` field MUST contain one of
+
+- a relative reference from the Zarr node prefix to an object on the same Zarr storage
+  - this SHOULD NOT contain `..` path segments, as ascending paths may be handled differently depending on how the Zarr store was opened
+- a [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data) encoding the thumbnail data inline
+  - it is RECOMENDED that only very small thumnbails are encoded in this form
+- an absolute IRI with the HTTPS scheme
+  - the image data MUST be available to an HTTP GET request
+  - this form is NOT RECOMMENDED
 
 ## Known Implementations
 
