@@ -22,14 +22,14 @@
           "downsampling": "gaussian"
         },
         "media_type": "image/jpeg",
-        "path": "thumbails/thumb96.jpeg"
+        "uri": "thumbails/thumb96.jpeg"
       },
       {
         "width": 48,
         "height": 48,
         "media_type": "image/png",
         "description": "Very small thumbnail",
-        "url": "https://image.host/thumb48.png"
+        "uri": "https://image.host/thumb48.png"
       }
     ]
   }

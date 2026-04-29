@@ -80,26 +80,7 @@
       ],
       "additionalProperties": false
     },
-    "hasPath": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "string"
-        }
-      },
-      "required": ["path"]
-    },
-    "hasUrl": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string",
-          "format": "uri"
-        }
-      },
-      "required": ["url"]
-    },
-    "thumbnailDetails": {
+    "thumbnail": {
       "type": "object",
       "description": "Thumbnail details.",
       "properties": {
@@ -125,28 +106,14 @@
           "type": "object",
           "description": "Unstructured arbitrary metadata about the thumbnail; could store information about how it was generated or how it represents the zarr node.",
           "additionalProperties": true
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "URI reference to the thumbnail image data; should be a relative path to a stored object from prefix of this Zarr node, or an absolute URL with the HTTPS scheme, or a data URI."
         }
       },
-      "required": ["width", "height", "media_type"]
-    },
-    "thumbnail": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/$defs/thumbnailDetails"
-        },
-        {
-          "type": "object",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/hasPath"
-            },
-            {
-              "$ref": "#/$defs/hasUrl"
-            }
-          ]
-        }
-      ]
+      "required": ["width", "height", "media_type", "uri"]
     }
   }
 }
