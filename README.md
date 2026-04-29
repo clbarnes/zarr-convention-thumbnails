@@ -126,11 +126,11 @@ The `uri` field MUST contain one of
 
 - a relative reference from the Zarr node prefix to an object on the same Zarr storage
   - this SHOULD NOT contain `..` path segments, as ascending paths may be handled differently depending on how the Zarr store was opened
-  - relative references SHOULD NOT
-- an absolute IRI with the HTTPS scheme
-  - the image data MUST be available to an HTTP GET request
 - a [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data) encoding the thumbnail data inline
   - it is RECOMENDED that only very small thumnbails are encoded in this form
+- an absolute IRI with the HTTPS scheme
+  - the image data MUST be available to an HTTP GET request
+  - this form is NOT RECOMMENDED
 
 ## Known Implementations
 
